@@ -7,6 +7,7 @@ const path = require("path");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static(__dirname));
 
 const folder = path.join(__dirname, "temp");
 if (!fs.existsSync(folder)) fs.mkdirSync(folder);
