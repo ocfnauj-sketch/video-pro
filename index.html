@@ -52,14 +52,19 @@ async function descargar() {
     }
 
     let res = await fetch("https://video-pro-ttvd.onrender.com/download", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ url })
-    });
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ url })
+});
 
-    let blob = await res.blob();
+if (!res.ok) {
+    alert("Error: el link no es válido o no es un video");
+    return;
+}
+
+let blob = await res.blob();
 
     let a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
