@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Descargar Videos</title>
+
+<style>
+body {
+    background: #0f0f0f;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    padding-top: 100px;
+}
+
+input {
+    width: 60%;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+}
+
+button {
+    padding: 15px 30px;
+    margin-top: 20px;
+    background: #00c853;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Descargar Videos</h1>
+
+<input type="text" id="url" placeholder="Pega el link del video (.mp4)">
+<br>
+
+<button onclick="descargar()">Descargar</button>
+
+<script>
+async function descargar() {
+    let url = document.getElementById("url").value;
+
+    if (!url) {
+        alert("Pon un link");
+        return;
+    }
+
+    let res = await fetch("http://localhost:3000/download", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url })
+    });
+
+    let blob = await res.blob();
+
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "video.mp4";
+    a.click();
+}
+</script>
+
+</body>
+</html>
